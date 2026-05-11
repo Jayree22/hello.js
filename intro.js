@@ -1,1 +1,0 @@
-console.log("Jerry Udochu, 36, JavaScript");
