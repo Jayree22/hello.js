@@ -2,22 +2,27 @@ const express = require('express');
 const app = express();
 app.use(express.json());
 
-app.get('/', (req, res) => {
-    res.send('Welcome to User Management API!');
+app.use((req, res, next) => {
+    console.log(`${req.method} ${req.url}, Time: ${new Date().toISOString()}`);
+    next();
 });
 
-app.post('/register', (req, res) => {
+app.get('/', (req, res) => {
+    res.send('My Week 2 Assignment');
+});
+
+app.post('/user', (req, res) => {
     const { name, email } = req.body;
     // Process registration logic here
     if (!name || !email) {
         return res.status(400).json({ message: 'Name and email are required' });
     }
     // Simulate successful registration
-    res.status(201).json({ message: 'User registered successfully', user: { name, email } });
+    res.status(201).json({ message: `Hello ${name}, your registration was successful!` });
 });
 
 app.get('/user/:id', (req, res) => {
-    res.json({ id: req.params.id, name: 'John Doe', email: 'john.doe@example.com' });
+    res.json({ id: req.query.id, name: 'John Doe', email: 'john.doe@example.com' });
 });
 
 const PORT = process.env.PORT || 3000;
